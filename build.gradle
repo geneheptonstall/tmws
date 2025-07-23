@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'application'
+    id 'org.springframework.boot' version '3.5.3'
+}
+
+group = 'org.gkh'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-log4j2')
+    implementation('org.springframework.boot:spring-boot-starter-json')
+    implementation('org.projectlombok:lombok')
+    annotationProcessor('org.projectlombok:lombok')
+    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+    implementation('org.springframework.boot:spring-boot-starter-cache')
+}
+
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+application {
+    mainClass = 'org.gkh.Main'
+}

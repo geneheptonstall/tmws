@@ -1,0 +1,20 @@
+logging:
+  level:
+    root: debug
+    sql: debug
+    web: debug
+  file:
+    name: logs/mws.log
+    path: logs
+app:
+  time-to-live-milliseconds: 3000
+weather-stack:
+  base-url: https://api.weatherstack.com
+  url: /current?access_key=%s&query=Melbourne
+  key: 4d46a76029374a76ce922a4b5df20174
+open-weather-map:
+  base-url: https://api.openweathermap.org
+  url: /data/2.5/weather?lat=%s&lon=%s&appid=%s
+  key: e9cc5e6bbb217eb8c5649439f04b7b8f
+  lat: -37.8140
+  lon: 144.9630
