@@ -36,7 +36,7 @@ public class WeatherStackService implements MelbourneWeatherService {
 
         return Optional.ofNullable(responseBody)
                 .map(response -> MelbourneWeatherDTO.builder()
-                        .tempCelsius(response.getCurrent().getTemperature())
+                        .temperatureDegrees(response.getCurrent().getTemperature())
                         .windSpeed(response.getCurrent().getWindSpeed())
                         .build())
                 .orElse(null);

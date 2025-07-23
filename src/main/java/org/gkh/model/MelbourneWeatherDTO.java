@@ -10,6 +10,6 @@ import lombok.Data;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class MelbourneWeatherDTO {
 
-    private String tempCelsius;
+    private String temperatureDegrees;
     private String windSpeed;
 }

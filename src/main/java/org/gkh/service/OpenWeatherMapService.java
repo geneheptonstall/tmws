@@ -36,7 +36,7 @@ public class OpenWeatherMapService implements MelbourneWeatherService {
 
         return Optional.ofNullable(responseBody)
                 .map(response -> MelbourneWeatherDTO.builder()
-                        .tempCelsius(kelvinToCelsius(response.getMain().getTemp()))
+                        .temperatureDegrees(kelvinToCelsius(response.getMain().getTemp()))
                         .windSpeed(response.getWind().getSpeed())
                         .build())
                 .orElse(null);
