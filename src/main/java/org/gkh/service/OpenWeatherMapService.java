@@ -32,9 +32,9 @@ public class OpenWeatherMapService implements MelbourneWeatherService {
         } catch (RestClientResponseException e) {
             log.error("Error: {}", e.getStatusCode().value());
         }
-        log.debug("weatherstack response: {}", responseBody != null ? responseBody.toString() : "null response!");
+        log.debug("openweathermap response: {}", responseBody != null && responseBody.getMain() != null && responseBody.getWind() != null ? responseBody.toString() : "null response!");
 
-        return Optional.ofNullable(responseBody)
+        return Optional.of(responseBody)
                 .map(response -> MelbourneWeatherDTO.builder()
                         .temperatureDegrees(kelvinToCelsius(response.getMain().getTemp()))
                         .windSpeed(response.getWind().getSpeed())

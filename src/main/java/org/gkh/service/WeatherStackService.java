@@ -32,13 +32,13 @@ public class WeatherStackService implements MelbourneWeatherService {
         } catch (RestClientResponseException e) {
             log.error("Error: {}", e.getStatusCode().value());
         }
-        log.debug("weatherstack response: {}", responseBody != null ? responseBody.toString() : "null response!");
+        log.debug("weatherstack response: {}", responseBody != null && responseBody.getCurrent() != null ? responseBody.toString() : "null response!");
 
         return Optional.ofNullable(responseBody)
-                .map(response -> MelbourneWeatherDTO.builder()
-                        .temperatureDegrees(response.getCurrent().getTemperature())
-                        .windSpeed(response.getCurrent().getWindSpeed())
-                        .build())
+                        .flatMap(response -> Optional.ofNullable(response.getCurrent()).map(current -> MelbourneWeatherDTO.builder()
+                        .temperatureDegrees(current.getTemperature())
+                        .windSpeed(current.getWindSpeed())
+                        .build()))
                 .orElse(null);
     }
 }
