@@ -12,8 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -35,6 +34,23 @@ public class WeatherControllerTests {
                 .windSpeed("10")
                 .build();
         when(weatherstackService.getWeather()).thenReturn(expected);
-        this.mockMvc.perform(get("/ping")).andExpect(status().isOk()).andExpect(content().contentType("application/json"));
+        this.mockMvc.perform(get("/ping"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.temperature_degrees").value(expected.getTemperatureDegrees()));
+    }
+
+    @Test
+    void pingWeather_shouldReturnOpenWeatherMapResponse() throws Exception {
+        MelbourneWeatherDTO expected = MelbourneWeatherDTO.builder()
+                .temperatureDegrees("20")
+                .windSpeed("10")
+                .build();
+        when(weatherstackService.getWeather()).thenReturn(null);
+        when(openweathermapService.getWeather()).thenReturn(expected);
+        this.mockMvc.perform(get("/ping"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.temperature_degrees").value(expected.getTemperatureDegrees()));
     }
 }
